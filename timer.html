@@ -121,6 +121,17 @@
             idx.innerHTML = index+1;
             var date = row.insertCell(1);
             // date.innerHTML = item.hours + ":" + item.minutes + ":" + item.seconds;
+
+            if (!Number.isInteger(item.hours)) {
+                item.hours = 0;
+            }
+            if (!Number.isInteger(item.minutes)) {
+                item.minutes = 0;
+            }
+            if (!Number.isInteger(item.hours)) {
+                item.seconds = 0;
+            }
+
             date.innerHTML = timeString(item.hours, item.minutes, item.seconds);
             var name = row.insertCell(2);
             name.innerHTML = item.name;
