@@ -9,6 +9,9 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="svg/bootstrap-icons/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
     <title>Boutsen Ginion countdown</title>
 </head>
 <body>
@@ -17,18 +20,21 @@
 <!--<div class="container" id="timer"></div>-->
 <!-- Optional JavaScript; choose one of the two! -->
 <div class="container" style="width: 100%">
+    <label for="flattimepicker">Add new event :</label>
+    <input type="text" id="flattimepicker" class="flattimepickerinput" style="width: 50%" data-input hidden>
 
-    <label for="timepicker">Add new event :</label>
+    <div style="margin: 10px">
+        <!--    <input type="time" id="timepicker" name="timepicker"-->
+        <!--           min="00:00:00" max="23:59:59" step="1" pattern="[0-9]{2}:[0-9]{2}:[0-9]{2}" required>-->
+        <input type="text" id="event-name" name="event-name" placeholder="Event name">
+        <button class="btn btn-sm btn-success" onclick="addDeadline()"><i class="bi bi-check2"></i></button>
+        <span style="width: 100%"><button class="float-right btn btn-sm btn-danger" onclick="resetEvents()"><i class="bi bi-trash"></i> Remove all events </button></span>
+        <span style="width: 100%"><button class="float-right btn btn-sm btn-warning" onclick="document.getElementById('file-selector').click();"><i class="bi bi-upload"></i> Load events </button></span>
+        <span style="width: 100%"><button class="float-right btn btn-sm btn-primary" onclick="saveFile()"><i class="bi bi-save"></i> Save events </button></span>
+        <input type="file" id="file-selector" hidden>
+        <a id="save-file" href=""></a>
+    </div>
 
-    <input type="time" id="timepicker" name="timepicker"
-           min="00:00:00" max="23:59:59" step="1" pattern="[0-9]{2}:[0-9]{2}:[0-9]{2}" required>
-    <input type="text" id="event-name" name="event-name" placeholder="Event name">
-    <button class="btn btn-sm btn-success" onclick="addDeadline()"><i class="bi bi-check2"></i></button>
-    <span style="width: 100%"><button class="float-right btn btn-sm btn-danger" onclick="resetEvents()"><i class="bi bi-trash"></i> Remove all events </button></span>
-    <span style="width: 100%"><button class="float-right btn btn-sm btn-warning" onclick="document.getElementById('file-selector').click();"><i class="bi bi-upload"></i> Load events </button></span>
-    <span style="width: 100%"><button class="float-right btn btn-sm btn-primary" onclick="saveFile()"><i class="bi bi-save"></i> Save events </button></span>
-    <input type="file" id="file-selector" hidden>
-    <a id="save-file" href=""></a>
 
     <div id="timer-container" class="container border rounded-3">
         <div class="text-center display-1 font-weight-bold"> <strong id="event-to-expire">-</strong> </div>
@@ -178,7 +184,7 @@
 
 
     function addDeadline() {
-        var input = document.getElementById("timepicker");
+        var input = document.getElementById("flattimepicker");
 
         var splitted = input.value.split(":");
 
@@ -292,6 +298,26 @@
 
     }
 
+    // Otherwise, selectors are also supported
+    const fp = flatpickr("#flattimepicker", {
+        altInput: true,
+        noCalendar: true,
+        enableTime: true,
+        time_24hr: true,
+        enableSeconds  : true,
+        inline: true,  // set to true to have the calendar inline
+        minuteIncrement: 1,
+        altFormat: "H:i:S",
+        dateFormat: "H:i:S",
+    });
+
+    var inputs = document.getElementsByClassName("flattimepickerinput");
+    for (var i  = 0 ; i < inputs.length ; i++) {
+        console.log(inputs[i]);
+        inputs[i].style.display = "none";
+    }
+    //.style.display = "none";
+
 
     // Update the count down every 1 second
     var x = setInterval(updateCount, 1000);
@@ -301,7 +327,9 @@
         // Local storage is available on your browser
         console.log("loaded " + typeof (localStorage.events));
         console.log(localStorage.events);
-        countDownEvents = JSON.parse(localStorage.events);
+        if (localStorage.events !== null && localStorage.events !== undefined && localStorage.events.length !== 0) {
+            countDownEvents = JSON.parse(localStorage.events);
+        }
         if (countDownEvents === undefined || countDownEvents === null) {
             countDownEvents = [];
         }
@@ -314,5 +342,10 @@
         // The condition isn't met, meaning local storage isn't supported
     }
 </script>
+<style>
+    .flatpickr-calendar {
+        margin: 10px;
+    }
+</style>
 </body>
 </html>
