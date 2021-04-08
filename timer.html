@@ -15,6 +15,11 @@
     <title>Boutsen Ginion countdown</title>
 </head>
 <body>
+<nav class="navbar navbar-default flex-row-reverse">
+    <a class="navbar-brand order-md-last" href="#" role="navigation">
+        <img src="images/boutsen.jpg" width="200" height="100" alt="">
+    </a>
+</nav>
 <h1>Countdown</h1>
 
 <!--<div class="container" id="timer"></div>-->
@@ -191,13 +196,13 @@
         var eventName = document.getElementById("event-name").value;
         var event = {name:eventName, hours: Number(splitted[0]), minutes: Number(splitted[1]), seconds: Number(splitted[2])};
 
-        if (Number.isNaN(event.hours)) {
-            event.hours = 0;
+        if (!Number.isInteger(event.hours)) {
+            event.hours = 18;
         }
-        if (Number.isNaN(event.minutes)) {
+        if (!Number.isInteger(event.minutes)) {
             event.minutes = 0;
         }
-        if (Number.isNaN(event.hours)) {
+        if (!Number.isInteger(event.hours)) {
             event.seconds = 0;
         }
 
@@ -309,6 +314,7 @@
         minuteIncrement: 1,
         altFormat: "H:i:S",
         dateFormat: "H:i:S",
+        defaultDate: "18:00:00",
     });
 
     var inputs = document.getElementsByClassName("flattimepickerinput");
