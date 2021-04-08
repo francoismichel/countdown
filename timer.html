@@ -267,7 +267,7 @@
             //     + minutes + ":" + seconds;
             document.getElementById("timer").innerHTML = timeString(hours, minutes, seconds);
             document.getElementById("event-to-expire").innerHTML = countDownEvents[countDownIndex].name;
-            if (days === 0 && hours === 0 && minutes === 0 && seconds < 30) {
+            if (days === 0 && hours === 0 && minutes < 5 /*&& seconds < 30*/) {
                 document.getElementById("timer-container").classList.add("bg-danger")
             } else {
                 document.getElementById("timer-container").classList.remove("bg-danger")
