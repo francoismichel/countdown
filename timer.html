@@ -15,27 +15,31 @@
     <title>Boutsen Ginion countdown</title>
 </head>
 <body>
-<nav class="navbar navbar-default flex-row-reverse">
-    <a class="navbar-brand order-md-last" href="#" role="navigation">
-        <img src="images/boutsen.jpg" width="200" height="100" alt="">
-    </a>
-</nav>
 <!--<h1>Countdown</h1>-->
 
 <!--<div class="container" id="timer"></div>-->
 <!-- Optional JavaScript; choose one of the two! -->
-<div class="container-fluid" style="width: 100%">
+<div class="container-fluid" style="width: 100%; margin-top: 50px">
 
     <!--    <div class="text-center">-->
     <!--        <img style="text-align: center" src="images/boutsen.jpg" width="50%"     alt="">-->
     <!--    </div>-->
-    <div class="text-center display-2 font-weight-bold"> <p id="current-time">00:00:00</p> </div>
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+            <div class="text-center display-2 font-weight-bold"> <strong id="current-time">00:00:00</strong> </div>
+        </div>
+        <div class="col-md-2">
+            <img src="images/boutsen.jpg" width="200" height="100" alt="">
+        </div>
+    </div>
 
 
     <div id="timer-container" class="container border rounded-3">
-        <div class="text-center display-1 font-weight-bold"> <strong id="event-to-expire">-</strong> </div>
-        <div class="text-center display-7 font-weight-bold"> Expires in </div>
-        <div class="text-center display-1 font-weight-bold" style="font-size: 6rem"> <strong id="timer">00:00:00</strong> </div>
+                <div class="text-center display-1 font-weight-bold"> <strong id="event-to-expire">-</strong> </div>
+                <div class="text-center display-7 font-weight-bold"> Expires in </div>
+                <div class="text-center display-1 font-weight-bold" style="font-size: 6rem"> <strong id="timer">00:00:00</strong> </div>
+        </div>
     </div>
 
     <div id="tables-container" class="container">
@@ -114,6 +118,10 @@
                     <tr>
                         <td style="text-align:center"> <input class="table-checkbox" type="checkbox"></td>
                         <td> Blanking <input class="table-input" type="text"></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:center"> <input class="table-checkbox" type="checkbox"></td>
+                        <td> Setup change: <input class="table-input" type="text"></td>
                     </tr>
                     </tbody>
                 </table>
