@@ -451,12 +451,10 @@
             var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
             // Display the result in the element with id="timer"
-            // document.getElementById("timer").innerHTML = days + "d " + hours + "h "
-            //     + minutes + "m " + seconds + "s ";
-            // document.getElementById("timer").innerHTML = hours + ":"
-            //     + minutes + ":" + seconds;
             document.getElementById("timer").innerHTML = timeString(hours, minutes, seconds);
             document.getElementById("event-to-expire").innerHTML = countDownEvents[countDownIndex].name;
+            
+            // put background in red
             // if (days === 0 && hours === 0 && minutes < 5 /*&& seconds < 30*/) {
             //     document.getElementById("timer-container").classList.add("bg-danger")
             // } else {
