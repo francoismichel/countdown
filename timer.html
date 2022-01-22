@@ -19,7 +19,7 @@
 
 <!--<div class="container" id="timer"></div>-->
 <!-- Optional JavaScript; choose one of the two! -->
-<div class="container-fluid" style="width: 100%; margin-top: 50px">
+<div class="container-fluid" style="width: 100%; margin-top: 50px; height: 100vh">
 
     <!--    <div class="text-center">-->
     <!--        <img style="text-align: center" src="images/boutsen.jpg" width="50%"     alt="">-->
@@ -27,7 +27,7 @@
     <div class="row">
         <div class="col-md-2"></div>
         <div class="col-md-8">
-            <div class="text-center display-2 font-weight-bold"> <strong id="current-time">00:00:00</strong> </div>
+            <div class="text-left display-1 font-weight-bold"> <strong id="current-time">00:00:00</strong> </div>
         </div>
         <div class="col-md-2">
             <img src="images/boutsen.jpg" width="200" height="100" alt="">
@@ -36,101 +36,137 @@
 
 
     <div id="timer-container" class="container border rounded-3">
-                <div class="text-center display-1 font-weight-bold"> <strong id="event-to-expire">-</strong> </div>
-                <div class="text-center display-7 font-weight-bold"> Expires in </div>
-                <div class="text-center display-1 font-weight-bold" style="font-size: 6rem"> <strong id="timer">00:00:00</strong> </div>
-        </div>
+            <div class="text-center display-1 font-weight-bold"> <strong id="event-to-expire">-</strong> </div>
+            <div class="text-center display-7 font-weight-bold"> Expires in </div>
+            <div class="text-center display-1 font-weight-bold" style="font-size: 6rem"> <strong id="timer">00:00:00</strong> </div>
     </div>
 
-    <div id="tables-container" class="container">
+    <div id="summaries-container" class="container" style="margin-top: 25px">
         <div class="row">
             <div class="col-md-6">
-
-                <div style="margin: 10px">
-                    <!--    <input type="time" id="timepicker" name="timepicker"-->
-                    <!--           min="00:00:00" max="23:59:59" step="1" pattern="[0-9]{2}:[0-9]{2}:[0-9]{2}" required>-->
-                    <label for="flattimepicker">Select time :</label>
-                    <input type="text" id="flattimepicker" placeholder="Select time.." class="flattimepickerinput" style="width: 50%" data-input hidden>
-
-                    <input type="text" id="event-name" name="event-name" placeholder="Event name">
-                    <button class="btn btn-sm btn-success" onclick="addDeadline()"><i class="bi bi-check2"></i></button>
-                    <span style="width: 100%"><button class="float-right btn btn-sm btn-danger" onclick="resetEvents()"><i class="bi bi-trash"></i> Remove all </button></span>
-                    <span style="width: 100%"><button class="float-right btn btn-sm btn-warning" onclick="document.getElementById('file-selector').click();"><i class="bi bi-upload"></i> Load </button></span>
-                    <span style="width: 100%"><button class="float-right btn btn-sm btn-primary" onclick="saveFile()"><i class="bi bi-save"></i> Save </button></span>
-                    <input type="file" id="file-selector" hidden>
-                    <a id="save-file" href=""></a>
+                <div class="container-fluid border rounded-3">
+                    <h3 class="text-center">Next stop around :</h3>
+                    <h2 class="text-center"><span id="next-stop-time">-</span></h2>
+                    <table class="table" id="next-stop-summary-table">
+                        <thead>
+                        <tr>
+                            <th scope="col">To do</th>
+                        </tr>
+                        </thead>
+                        <tbody id="next-stop-summary-table-body">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="container-fluid border rounded-3">
+                    <h3 class="text-center">Planning of the day:</h3>
+                    <table class="table" id="planning-of-the-day-summary-table">
+                        <thead>
+                        <tr>
+                            <th scope="col">Time</th>
+                            <th scope="col">Event</th>
+                        </tr>
+                        </thead>
+                        <tbody id="planning-of-the-day-summary-table-body">
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-6">
+    </div>
+</div>
 
-                <table class="table" id="countdown-table">
-                    <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col" data-name="time">Time</th>
-                        <th scope="col" data-name="event">Event</th>
-                        <th scope="col" data-name="action">Action</th>
-                    </tr>
-                    </thead>
-                    <tbody id="countdown-table-body">
-                    </tbody>
-                </table>
-            </div>
-            <div class="col-md-6">
+<div id="tables-container" class="container" style="height: 100vh">
+    <div class="row">
+        <div class="col-md-6">
+            <div style="margin: 10px">
+                <label for="next-stop-job-flattimepicker">Select time :</label>
+                <input type="text" id="next-stop-job-flattimepicker" placeholder="Select time.." class="flattimepickerinput" style="width: 50%" data-input hidden>
 
-                <table class="table" id="subtasks-table">
-                    <thead>
-                    <tr>
-                        <th scope="col" data-name="completed" style="text-align:center"> <span style="text-align: center">Completed</span></th>
-                        <th scope="col" data-name="next-stop-job">Next stop job</th>
-                        <th scope="col" data-name="next-stop-job"><button class="btn btn-sm btn-danger" onclick="clearSubtasks()"><i class="bi bi-trash"></i></button></th>
-                    </tr>
-                    </thead>
-                    <tbody id="subtasks-table-body">
-                    <tr>
-                    </tr>
-                    <tr>
-                        <td style="text-align:center"> <input class="table-checkbox"    type="checkbox"></td>
-                        <td> Tires change set: <input class="table-input" type="text"></td>
-                    </tr>
-                    <tr>
-                        <td style="text-align:center"> <input class="table-checkbox" type="checkbox"></td>
-                        <td> Fuel in: <input class="input" type="text"> kg</td>
-                    </tr>
-                    <tr>
-                        <td style="text-align:center"> <input class="table-checkbox" type="checkbox"></td>
-                        <td> Driver change: <input class="table-input" type="text"></td>
-                    </tr>
-                    <tr>
-                        <td style="text-align:center"> <input class="table-checkbox" type="checkbox"></td>
-                        <td> Check pressure </td>
-                    </tr>
-                    <tr>
-                        <td style="text-align:center"> <input class="table-checkbox" type="checkbox"></td>
-                        <td> Check tires temp </td>
-                    </tr>
-                    <tr>
-                        <td style="text-align:center"> <input class="table-checkbox" type="checkbox"></td>
-                        <td> Check brake temp </td>
-                    </tr>
-                    <tr>
-                        <td style="text-align:center"> <input class="table-checkbox" type="checkbox"></td>
-                        <td> Blanking <input class="table-input" type="text"></td>
-                    </tr>
-                    <tr>
-                        <td style="text-align:center"> <input class="table-checkbox" type="checkbox"></td>
-                        <td> Setup change: <input class="table-input" type="text"></td>
-                    </tr>
-                    </tbody>
-                </table>
             </div>
+
+            <table class="table" id="subtasks-table">
+                <thead>
+                <tr>
+                    <th scope="col" data-name="completed" style="text-align:center"> <span style="text-align: center">Completed</span></th>
+                    <th scope="col" data-name="next-stop-job">Next stop job</th>
+                    <th scope="col" data-name="next-stop-job"><button class="btn btn-sm btn-success" onclick="loadSubtasks()"><i class="bi bi-check"></i></button></th>
+                    <th scope="col" data-name="next-stop-job"><button class="btn btn-sm btn-danger" onclick="clearSubtasks()"><i class="bi bi-trash"></i></button></th>
+                </tr>
+                </thead>
+                <tbody id="subtasks-table-body">
+                <tr>
+                </tr>
+                <tr>
+                    <td style="text-align:center"> <input class="table-checkbox"    type="checkbox"></td>
+                    <td class="table-cell"> Tires change set: <input class="table-input" type="text"></td>
+                </tr>
+                <tr>
+                    <td style="text-align:center"> <input class="table-checkbox" type="checkbox"></td>
+                    <td class="table-cell"> Fuel in: <input class="table-input" type="text"> kg</td>
+                </tr>
+                <tr>
+                    <td style="text-align:center"> <input class="table-checkbox" type="checkbox"></td>
+                    <td class="table-cell"> Driver change: <input class="table-input" type="text"></td>
+                </tr>
+                <tr>
+                    <td style="text-align:center"> <input class="table-checkbox" type="checkbox"></td>
+                    <td class="table-cell"> Check pressure </td>
+                </tr>
+                <tr>
+                    <td style="text-align:center"> <input class="table-checkbox" type="checkbox"></td>
+                    <td class="table-cell"> Check tires temp </td>
+                </tr>
+                <tr>
+                    <td style="text-align:center"> <input class="table-checkbox" type="checkbox"></td>
+                    <td class="table-cell"> Check brake temp </td>
+                </tr>
+                <tr>
+                    <td style="text-align:center"> <input class="table-checkbox" type="checkbox"></td>
+                    <td class="table-cell"> Blanking <input class="table-input" type="text"></td>
+                </tr>
+                <tr>
+                    <td style="text-align:center"> <input class="table-checkbox" type="checkbox"></td>
+                    <td class="table-cell"> Setup change: <input class="table-input" type="text"></td>
+                </tr>
+                </tbody>
+            </table>
         </div>
 
+        <div class="col-md-6">
+
+            <div style="margin: 10px">
+                <!--    <input type="time" id="timepicker" name="timepicker"-->
+                <!--           min="00:00:00" max="23:59:59" step="1" pattern="[0-9]{2}:[0-9]{2}:[0-9]{2}" required>-->
+                <label for="flattimepicker">Next stop job time :</label>
+                <input type="text" id="flattimepicker" placeholder="Select time.." class="flattimepickerinput" style="width: 50%" data-input hidden>
+
+                <input type="text" id="event-name" name="event-name" placeholder="Event name">
+                <button class="btn btn-sm btn-success" onclick="addDeadline()"><i class="bi bi-check2"></i></button>
+                <span style="width: 100%"><button class="float-right btn btn-sm btn-danger" onclick="resetEvents()"><i class="bi bi-trash"></i> Remove all </button></span>
+                <span style="width: 100%"><button class="float-right btn btn-sm btn-warning" onclick="document.getElementById('file-selector').click();"><i class="bi bi-upload"></i> Load </button></span>
+                <span style="width: 100%"><button class="float-right btn btn-sm btn-primary" onclick="saveFile()"><i class="bi bi-save"></i> Save </button></span>
+                <input type="file" id="file-selector" hidden>
+                <a id="save-file" href=""></a>
+            </div>
+            <table class="table" id="countdown-table">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col" data-name="time">Time</th>
+                    <th scope="col" data-name="event">Event</th>
+                    <th scope="col" data-name="action">Action</th>
+                </tr>
+                </thead>
+                <tbody id="countdown-table-body">
+                </tbody>
+            </table>
+        </div>
     </div>
 
 </div>
+
 <!-- Option 1: Bootstrap Bundle with Popper -->
 
 <!-- Option 2: Separate Popper and Bootstrap JS -->
@@ -158,6 +194,41 @@
         //     hours: 22, minutes: 43, seconds: 5,
         // },
     ];
+
+    function loadSubtasks() {
+
+        var checkboxes = document.getElementsByClassName("table-checkbox");
+        var inputs = document.getElementsByClassName("table-input");
+        var cells = document.getElementsByClassName("table-cell");
+
+        const subTasksTable = document.getElementById("subtasks-table");
+        const subTasksTableBody = document.getElementById("subtasks-table-body");
+        const table = document.getElementById("next-stop-summary-table");
+        const tbody = document.getElementById("next-stop-summary-table-body");
+
+        // set the absolute time of the next stop
+        document.getElementById("next-stop-time").innerHTML = document.getElementById("next-stop-job-flattimepicker").value;
+
+        var input_str = '<input class="table-input" type="text">';
+
+        tbody.innerHTML = "";
+        for (var i  = 0 ; i < cells.length ; i++) {
+            if (checkboxes[i].checked) {
+                var cell = cells[i];
+                var cell_inputs = cell.getElementsByClassName("table-input");
+                var cell_input = cell_inputs.length > 0 ? cell_inputs[0] : undefined;
+                var row = tbody.insertRow();
+                var cell_txt = cell.innerHTML;
+                if (cell_input !== undefined) {
+                    cell_txt = cell_txt.replace(input_str, cell_input.value);
+                }
+                row.setAttribute("data-subtask-row-idx", i);
+                var todo = row.insertCell(0);
+                todo.innerHTML = cell_txt;
+            }
+        }
+        clearSubtasks();
+    }
 
     function clearSubtasks() {
 
@@ -202,6 +273,10 @@
     // Set the date we're counting down to
     // var countDownDate = new Date("Jan 5, 2022 15:37:25").getTime();
 
+    function updateTables(items) {
+        loadTableData(items);
+        loadPlanningOfTheDayData(items);
+    }
 
     function loadTableData(items) {
         items.sort(compareTimes);
@@ -238,6 +313,37 @@
         });
     }
 
+
+    function loadPlanningOfTheDayData(items) {
+
+        items.sort(compareTimes);
+        const table = document.getElementById("planning-of-the-day-summary-table");
+        const tbody = document.getElementById("planning-of-the-day-summary-table-body");
+        tbody.innerHTML = "";
+        items.forEach( (item, index) => {
+            var row = tbody.insertRow();
+            row.setAttribute("data-row-idx", index);
+            var date = row.insertCell(0);
+            // date.innerHTML = item.hours + ":" + item.minutes + ":" + item.seconds;
+
+            if (!Number.isInteger(item.hours)) {
+                item.hours = 0;
+            }
+            if (!Number.isInteger(item.minutes)) {
+                item.minutes = 0;
+            }
+            if (!Number.isInteger(item.hours)) {
+                item.seconds = 0;
+            }
+
+            date.innerHTML = timeString(item.hours, item.minutes, item.seconds);
+
+            var event = row.insertCell(1);
+            event.innerHTML = item.name;
+        });
+    }
+
+
     function refreshExpiredRows() {
         const table = document.getElementById("countdown-table");
 
@@ -260,12 +366,12 @@
     function resetEvents() {
         countDownEvents = []
         localStorage.events = JSON.stringify(countDownEvents);
-        loadTableData(countDownEvents);
+        updateTables(countDownEvents);
     }
 
     function removeDeadline(index) {
         countDownEvents.splice(index, 1);
-        loadTableData(countDownEvents);
+        updateTables(countDownEvents);
         // localStorage.setItem("events", JSON.stringify(countDownEvents));
         localStorage.events = JSON.stringify(countDownEvents);
     }
@@ -290,7 +396,7 @@
         }
 
         countDownEvents.push(event);
-        loadTableData(countDownEvents);
+        updateTables(countDownEvents);
         // localStorage.setItem("events", JSON.stringify(countDownEvents));
         localStorage.events = JSON.stringify(countDownEvents);
     }
@@ -318,6 +424,7 @@
 
 
         while (countDownIndex < countDownEvents.length) {
+
             if (compareTimes(countDownEvents[countDownIndex], dateToTime(now)) >= 0) {
                 break;
             } else {
@@ -350,11 +457,14 @@
             //     + minutes + ":" + seconds;
             document.getElementById("timer").innerHTML = timeString(hours, minutes, seconds);
             document.getElementById("event-to-expire").innerHTML = countDownEvents[countDownIndex].name;
-            if (days === 0 && hours === 0 && minutes < 5 /*&& seconds < 30*/) {
-                document.getElementById("timer-container").classList.add("bg-danger")
-            } else {
-                document.getElementById("timer-container").classList.remove("bg-danger")
-            }
+            // if (days === 0 && hours === 0 && minutes < 5 /*&& seconds < 30*/) {
+            //     document.getElementById("timer-container").classList.add("bg-danger")
+            // } else {
+            //     document.getElementById("timer-container").classList.remove("bg-danger")
+            // }
+
+
+
             // If the count down is finished, write some text
         } else if (countDownEvents.length > 0) {
             document.getElementById("timer").innerHTML = "EXPIRED";
@@ -381,11 +491,25 @@
             var content = readerEvent.target.result.toString(); // this is the content!
             var jsonContent = JSON.parse(content);
             countDownEvents = jsonContent;
-            loadTableData(countDownEvents);
+            updateTables(countDownEvents);
             localStorage.events = JSON.stringify(countDownEvents);
         }
 
     }
+
+    // Otherwise, selectors are also supported
+    const nextStopJobfp = flatpickr("#next-stop-job-flattimepicker", {
+        altInput: true,
+        noCalendar: true,
+        enableTime: true,
+        time_24hr: true,
+        enableSeconds  : true,
+        inline: true,  // set to true to have the calendar inline
+        minuteIncrement: 1,
+        altFormat: "H:i:S",
+        dateFormat: "H:i:S",
+        defaultDate: "18:00:00",
+    });
 
     // Otherwise, selectors are also supported
     const fp = flatpickr("#flattimepicker", {
@@ -424,7 +548,7 @@
             countDownEvents = [];
         }
         updateCount();
-        loadTableData(countDownEvents);
+        updateTables(countDownEvents);
         console.log("loaded " + typeof (countDownEvents));
         console.log(JSON.stringify(countDownEvents));
     } else {
